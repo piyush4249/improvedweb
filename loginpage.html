@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Login/New Registration</title>
+    
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ccc;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+      }
+    </style>
+           
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper" style="background-color: skyblue;">
+
+          <a href="#" class="brand-logo">Welcome </a>
+          <ul id="nav-mobile" class="right">
+            <li id="loginli"><a class="modal-trigger" href="#modal2">Login</a></li>
+            <li  id="signupli"><a class="modal-trigger" href="#modal1">Signup</a></li>
+            <li  id="logoutli"><a onclick="logout()">Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+    <!--Signup Modal -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Signup</h4>
+      <form autocomplete="off" onsubmit="signup(event)">
+        <input type="email" id="signupEmail" placeholder="email" />
+        <input type="password" id="signupPassword" placeholder="password" />
+        <button class="btn waves-effect #fbc02d yellow darken-2" type="submit">submit</button>   
+      </form>
+       <button class="btn waves-effect blue" onclick="loginWithGoogle()">Login with google</button>
+      
+     
+    </div>
+  </div>
+         
+    <!--login Modal -->
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <h4>Login</h4>
+      <form autocomplete="off" onsubmit="login(event)">
+        <input type="email" id="loginEmail" placeholder="email" />
+        <input type="password" id="loginPassword" placeholder="password" />
+        <button class="btn waves-effect #fbc02d yellow darken-2" type="submit">submit</button>   
+      </form>
+      <button class="btn waves-effect blue" onclick="loginWithGoogle()">Login with google</button>
+      
+     
+    </div>
+  </div>
+    <!--edit profile -->
+  <div id="modal3" class="modal">
+    <div class="modal-content">
+      <h4>Edit your details</h4>
+      <div class="file-field input-field">
+        <div class="btn #fbc02d yellow darken-2">
+          <span>Profile Picture</span>
+          <input type="file" accept="image/*" onchange="uploadImage(event)" />
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+     <form autocomplete="off" id="editProfile" onsubmit="updateUserProfile(event)">
+        <input type="text" name="name" placeholder="name" />
+        <input type="number" name="age" placeholder="age" />
+        <input type="text" name="gender" placeholder="Gender = M/F/O" />
+        <input type="number" name="phoneno" placeholder="phoneno" />
+        <textarea name="address" placeholder="Enter your address"></textarea>
+        <textarea name="clinicalHistory" placeholder="Enter your clinical history"></textarea>
+        
+        <button class="btn waves-effect #fbc02d yellow darken-2" type="submit">submit</button>   
+      </form>
+  
+      
+     
+    </div>
+  </div>
+
+
+  <div class="center">
+    <h2>Portable Physiological Data Acquisition And Disease Diagnosis System</h2>
+    <img id="proimg" class="circle" src="./assets/National_Institute_of_Technology,_Hamirpur_Logo.png" alt="noimage" style="width: 20%;height: auto;" />
+    <div class="userDetails"></div>
+  </div>
+  <canvas id="ppgChart"></canvas> 
+  <canvas id="ecgChart"></canvas>      
+  <table id="table" style="display: none;">
+    <thead>
+      <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Contact No</th>
+          <th>Ambient <br> Temperature<br>(in C) </th>
+          <th>Body <br>Temperature<br>(in F)</th>
+          <th>HR<br>(in bpm)</th>
+          <th>SPO2<br>(in %)</th>
+          <th>Clinical<br>History</th>
+          <th>File Name</th>
+          <th>Download <be>Record</be></th>
+          
+      </tr>
+    </thead>
+
+    <tbody id="tbody">
+     
+    </tbody>
+  </table>
+
+  <canvas id="ppgChart"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>  
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+</script>  
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCOQetfF1-4CH9lMecbVfTSn87yPPKxWzQ",
+    authDomain: "august-outlet-377807.firebaseapp.com",
+    databaseURL: "https://august-outlet-377807-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "august-outlet-377807",
+    storageBucket: "august-outlet-377807.appspot.com",
+    messagingSenderId: "571118008986",
+    appId: "1:571118008986:web:a5e3df52c93a1ff8eefd23"
+};
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+<script src="./scripts/auth.js"></script>
+<script src="./scripts/firestore-db2.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
